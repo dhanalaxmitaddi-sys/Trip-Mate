@@ -1,0 +1,464 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+}
+
+/* Glassmorphism and Custom Utilities */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px -4px rgba(2, 132, 199, 0.12), 0 6px 16px -4px rgba(0, 0, 0, 0.04);
+  border-color: rgba(2, 132, 199, 0.3);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 50%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 50%, #4f46e5 100%);
+}
+
+.gradient-subtle {
+  background: linear-gradient(180deg, #f0f9ff 0%, #f8fafc 100%);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Shimmer animation for AI loading */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Smooth 150ms-250ms Micro-Animations (Requirement 8) */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 250ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-scale-up {
+  animation: scaleUp 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-spin-slow {
+  animation: spinSlow 12s linear infinite;
+}
+
+/* ==========================================================================
+   TripMate Travel Animated Background System
+   ========================================================================== */
+
+/* Global Background Color Shifts (Stage 1 to Stage 5 over 35s - Requirement 2 & 9) */
+@keyframes travelBgColorShift {
+  0% {
+    background-color: #F5F9FC;
+    background-position: 0% 50%;
+  }
+  25% {
+    background-color: #EFF8FF; /* Stage 1: Soft Blue */
+    background-position: 50% 100%;
+  }
+  50% {
+    background-color: #ECFEFF; /* Stage 2: Soft Cyan */
+    background-position: 100% 50%;
+  }
+  75% {
+    background-color: #F0FDFA; /* Stage 3: Soft Teal */
+    background-position: 50% 0%;
+  }
+  100% {
+    background-color: #F8FAFC; /* Stage 5: Soft White / Base */
+    background-position: 0% 50%;
+  }
+}
+
+.travel-global-bg {
+  background: linear-gradient(
+    120deg,
+    #F5F9FC 0%,
+    #EFF8FF 30%,
+    #F0FDFA 70%,
+    #F8FAFC 100%
+  );
+  background-size: 200% 200%;
+  animation: travelBgColorShift 35s ease-in-out infinite;
+}
+
+/* 1. Moving Blurred Gradient Blobs (Requirement 3: 25-45s) */
+/* Blob 1: Blue/Cyan (Left -> Center -> Right -> Center) */
+@keyframes blob1Move {
+  0%, 100% {
+    transform: translate3d(-15vw, -5vh, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(20vw, 5vh, 0) scale(1.1);
+  }
+  66% {
+    transform: translate3d(55vw, -10vh, 0) scale(0.95);
+  }
+}
+
+/* Blob 2: Soft Teal (Top -> Bottom -> Top) */
+@keyframes blob2Move {
+  0%, 100% {
+    transform: translate3d(30vw, -10vh, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(35vw, 65vh, 0) scale(1.15);
+  }
+}
+
+/* Blob 3: Light Sky Blue (Right -> Left -> Right) */
+@keyframes blob3Move {
+  0%, 100% {
+    transform: translate3d(70vw, 30vh, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(10vw, 40vh, 0) scale(1.08);
+  }
+}
+
+/* Blob 4: Very Light Warm Yellow (Slow diagonal movement) */
+@keyframes blob4Move {
+  0%, 100% {
+    transform: translate3d(60vw, 65vh, 0) scale(0.9);
+  }
+  50% {
+    transform: translate3d(15vw, 15vh, 0) scale(1.12);
+  }
+}
+
+.animate-blob-1-travel {
+  animation: blob1Move 35s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-blob-2-travel {
+  animation: blob2Move 42s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-blob-3-travel {
+  animation: blob3Move 30s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-blob-4-travel {
+  animation: blob4Move 38s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* 2. Moving Clouds (Requirement 4: 45-70s) */
+/* Cloud 1 & 3: Left -> Right */
+@keyframes cloudLeftToRight {
+  0% {
+    transform: translate3d(-35vw, 0, 0);
+  }
+  100% {
+    transform: translate3d(120vw, 0, 0);
+  }
+}
+
+/* Cloud 2 & 4: Right -> Left */
+@keyframes cloudRightToLeft {
+  0% {
+    transform: translate3d(120vw, 0, 0);
+  }
+  100% {
+    transform: translate3d(-35vw, 0, 0);
+  }
+}
+
+.animate-cloud-l2r-45 {
+  animation: cloudLeftToRight 45s linear infinite;
+  will-change: transform;
+}
+
+.animate-cloud-r2l-60 {
+  animation: cloudRightToLeft 60s linear infinite;
+  will-change: transform;
+}
+
+.animate-cloud-l2r-70 {
+  animation: cloudLeftToRight 70s linear infinite;
+  will-change: transform;
+}
+
+.animate-cloud-r2l-55 {
+  animation: cloudRightToLeft 55s linear infinite;
+  will-change: transform;
+}
+
+/* 3. Moving Travel Route Lines (Requirement 5) */
+@keyframes routeFlowDash {
+  0% {
+    stroke-dashoffset: 160;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-route-flow {
+  animation: routeFlowDash 22s linear infinite;
+}
+
+.animate-route-flow-reverse {
+  animation: routeFlowDash 28s linear infinite reverse;
+}
+
+/* 4. Moving Location Dots & Pulse (Requirement 6: scale 1 -> 1.4 -> 1, opacity 0.15 -> 0.35 -> 0.15) */
+@keyframes locationDotPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.15;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.35;
+  }
+}
+
+@keyframes mapDotFloat {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+.animate-location-pulse {
+  animation: locationDotPulse 3.5s ease-in-out infinite;
+}
+
+.animate-dot-float {
+  animation: mapDotFloat 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* 5. Moving Airplane (Requirement 7: left-bottom -> center -> right-top, 35-50s) */
+@keyframes airplaneTraverseCurved {
+  0% {
+    transform: translate3d(-8vw, 76vh, 0) rotate(-34deg) scale(0.85);
+    opacity: 0;
+  }
+  6% {
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate3d(48vw, 42vh, 0) rotate(-26deg) scale(0.95);
+    opacity: 0.7;
+  }
+  94% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate3d(108vw, 10vh, 0) rotate(-18deg) scale(0.9);
+    opacity: 0;
+  }
+}
+
+.animate-airplane-travel {
+  animation: airplaneTraverseCurved 42s cubic-bezier(0.35, 0, 0.65, 1) infinite;
+  will-change: transform, opacity;
+}
+
+/* 6. Floating Particles (Requirement 8: 10-25s slow vertical + horizontal drift) */
+@keyframes particleDriftA {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.12;
+  }
+  40% {
+    transform: translate3d(14px, -24px, 0);
+    opacity: 0.25;
+  }
+  75% {
+    transform: translate3d(-10px, -42px, 0);
+    opacity: 0.15;
+  }
+}
+
+@keyframes particleDriftB {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.10;
+  }
+  50% {
+    transform: translate3d(-18px, -28px, 0);
+    opacity: 0.22;
+  }
+}
+
+.animate-particle-drift-a {
+  animation: particleDriftA 18s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-particle-drift-b {
+  animation: particleDriftB 24s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* 7. Subtle Sparkle Shimmer for Offers */
+@keyframes sparkleShimmer {
+  0%, 100% {
+    transform: scale(0.7) rotate(0deg);
+    opacity: 0.15;
+  }
+  50% {
+    transform: scale(1.2) rotate(45deg);
+    opacity: 0.55;
+  }
+}
+
+.animate-sparkle-shimmer {
+  animation: sparkleShimmer 7s ease-in-out infinite;
+}
+
+/* 8. Content Readability & Cards (Requirement 10) */
+.travel-card {
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.08);
+}
+
+/* 9. Button Color Updates (Requirement 11) */
+.btn-travel-primary {
+  background-color: #2563EB;
+  color: #ffffff;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-travel-primary:hover {
+  background-color: #1D4ED8;
+}
+
+.btn-travel-secondary {
+  background-color: #E0F2FE;
+  color: #0369A1;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-travel-secondary:hover {
+  background-color: #BAE6FD;
+}
+
+.btn-travel-accent {
+  background-color: #14B8A6;
+  color: #ffffff;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-travel-accent:hover {
+  background-color: #0D9488;
+}
+
+/* 10. Navbar Travel Theme (Requirement 12) */
+.navbar-travel {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(37, 99, 235, 0.08);
+}
+
+/* 11. Accessibility (Requirement 17: prefers-reduced-motion) */
+@media (prefers-reduced-motion: reduce) {
+  .travel-global-bg,
+  .animate-blob-1-travel,
+  .animate-blob-2-travel,
+  .animate-blob-3-travel,
+  .animate-blob-4-travel,
+  .animate-cloud-l2r-45,
+  .animate-cloud-r2l-60,
+  .animate-cloud-l2r-70,
+  .animate-cloud-r2l-55,
+  .animate-route-flow,
+  .animate-route-flow-reverse,
+  .animate-location-pulse,
+  .animate-dot-float,
+  .animate-airplane-travel,
+  .animate-particle-drift-a,
+  .animate-particle-drift-b,
+  .animate-sparkle-shimmer {
+    animation: none !important;
+    transition: none !important;
+  }
+  .animate-airplane-travel {
+    display: none !important;
+  }
+}
+
+/* 12. Mobile Auto-Optimization (Requirement 15) */
+@media (max-width: 768px) {
+  .animate-airplane-travel {
+    opacity: 0.35 !important;
+  }
+  .mobile-hide-decor {
+    display: none !important;
+  }
+}
+
+

@@ -1,0 +1,29 @@
+{
+  "name": "tripmind-ai-platform",
+  "version": "1.0.0",
+  "description": "TripMind AI - Intelligent Travel Itinerary & Expense Management Platform (Full-Stack MERN)",
+  "main": "server/server.js",
+  "scripts": {
+    "server": "node server/server.js",
+    "client": "npm run dev --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "npm run build --prefix client",
+    "start": "node server/server.js"
+  },
+  "keywords": [
+    "travel-planner",
+    "mern",
+    "ai-itinerary",
+    "srs-compliant"
+  ],
+  "author": "TripMind AI Engineering Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4",
+    "leaflet-routing-machine": "^3.2.12",
+    "react-leaflet": "^5.0.0"
+  }
+}
